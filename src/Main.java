@@ -47,8 +47,8 @@ public class Main {
 		int tamanhoVetorDestinoQueSeraOrdenado = indiceFimMetadeDireitaOrdenada - indiceInicioMetadeEsquerdaOrdenada + 1;
 		
 		// Este 'vetorAuxOrdenado' existe porque:
-		// Se 'vetor' = ... 4, 5, 6, 1, 2, 3, ...
-		// Sendo a parte esquerda 4, 5, 6 e a parte direita 1, 2, 3, então neste exemplo na ordenação
+		// Se 'vetor' = ... 4, 5, 1, 2, ...
+		// Sendo a parte esquerda 4, 5 e a parte direita 1, 2, então neste exemplo na ordenação
 		// a parte direita seria salva por cima da parte esquerda, perdendo os dados da parte esquerda. Por isso preciso do
 		// 'vetorAuxOrdenado' pra guardar o resultado ordenado para no final eu copiar os dados dele no 'vetor'.
 		int[] vetorAuxOrdenado = new int[tamanhoVetorDestinoQueSeraOrdenado];
