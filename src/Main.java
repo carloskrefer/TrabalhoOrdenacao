@@ -3,7 +3,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		System.out.println("oi");
-		int[] x = {5, 4, 3, 2, 1, 99, 0, 4, 55, 2, 99, 2};
+		int[] x = {5, 4, 6, 66, 0};
 		
 		// remover função LENGTH
 		ordenarMergeSort(x, 0, x.length - 1);
@@ -44,9 +44,7 @@ public class Main {
 	public static void ordenarPartesOrdenadasDumVetorNoMesmoVetor(int[] vetor, int indiceInicioMetadeEsquerdaOrdenada,
 			int indiceFimMetadeEsquerdaOrdenada, int indiceInicioMetadeDireitaOrdenada, int indiceFimMetadeDireitaOrdenada) {
 
-		int tamanhoParteEsquerda = indiceFimMetadeEsquerdaOrdenada - indiceInicioMetadeEsquerdaOrdenada + 1;
-		int tamanhoParteDireita = indiceFimMetadeDireitaOrdenada - indiceInicioMetadeDireitaOrdenada + 1;
-		int tamanhoVetorDestinoQueSeraOrdenado = tamanhoParteEsquerda + tamanhoParteDireita;
+		int tamanhoVetorDestinoQueSeraOrdenado = indiceFimMetadeDireitaOrdenada - indiceInicioMetadeEsquerdaOrdenada + 1;
 		
 		// Este 'vetorAuxOrdenado' existe porque:
 		// Se 'vetor' = ... 4, 5, 6, 1, 2, 3, ...
