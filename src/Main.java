@@ -3,9 +3,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		System.out.println("oi");
-		int[] x = {99, 1, 50, 4, 55, 99, 0, 55, 5};
+		int[] x = {5, 4, 3, 2, 1, 99, 0, 4, 55, 2, 99, 2};
 		
-		ordenarMergeSort(x, 9);
+		// remover função LENGTH
+		ordenarMergeSort(x, 0, x.length - 1);
 		
 		imprimirVetor(x);
 		
@@ -13,69 +14,82 @@ public class Main {
 		
 	}
 	
-	// talvez pra eu não precisar criar novos objetos, eu poderia indicar aqui nos parâmetros
-	// os índices que estou usando do vetor original
-	public static void ordenarMergeSort(int[] vetor, int tamanhoVetor) {		
-		boolean isTamanhoVetorImpar = (tamanhoVetor % 2) == 1;
+	public static void ordenarMergeSort(int[] vetor, int indiceInicio, int indiceFim) {	
+		int tamanhoVetor = indiceFim - indiceInicio + 1;
 		
-		if (tamanhoVetor > 2) {
+		if (tamanhoVetor > 2) {		
 			int tamanhoVetorMetadeEsquerda = tamanhoVetor / 2;
-			int[] vetorMetadeEsquerda = new int[tamanhoVetorMetadeEsquerda];
+			int indiceInicioMetadeEsquerda = indiceInicio;
+			int indiceFimMetadeEsquerda = indiceInicio + tamanhoVetorMetadeEsquerda - 1;
 			
-			// Se é impar + 1 porque 5 / 2 = 2 pra esquerda e 2 + 1 pra direita.			
-			int tamanhoVetorMetadeDireita = (isTamanhoVetorImpar) ? (tamanhoVetor / 2) + 1 : tamanhoVetor / 2;
-			int[] vetorMetadeDireita = new int[tamanhoVetorMetadeDireita];
+			int indiceInicioMetadeDireita = indiceFimMetadeEsquerda + 1;
+			int indiceFimMetadeDireita = indiceFim;
 			
-			copiarDadosVetor(vetorMetadeEsquerda,   vetor,   0, 						   tamanhoVetorMetadeEsquerda - 1);
-			copiarDadosVetor(vetorMetadeDireita,  	vetor,   tamanhoVetorMetadeEsquerda,   tamanhoVetor - 1);
+			ordenarMergeSort(vetor, indiceInicioMetadeEsquerda, indiceFimMetadeEsquerda);
+			ordenarMergeSort(vetor, indiceInicioMetadeDireita,  indiceFimMetadeDireita);
 			
-			ordenarMergeSort(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda);
-			ordenarMergeSort(vetorMetadeDireita,  tamanhoVetorMetadeDireita);
+			ordenarPartesOrdenadasDumVetorNoMesmoVetor(vetor, indiceInicioMetadeEsquerda, indiceFimMetadeEsquerda,
+					indiceInicioMetadeDireita, indiceFimMetadeDireita);	
 			
-			unirOrdenadamenteVetoresOrdenadosNumVetorDestino(vetor, tamanhoVetor, vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);	
 		}  else if (tamanhoVetor == 2) {
-			if (vetor[0] > vetor[1]) {
-				int temp = vetor[0];
-				vetor[0] = vetor[1];
-				vetor[1] = temp;
+			if (vetor[indiceInicio] > vetor[indiceFim]) {
+				int temp 			= vetor[indiceInicio];
+				vetor[indiceInicio] = vetor[indiceFim];
+				vetor[indiceFim] 	= temp;
 			}
 		}
 	}
 	
-	public static void unirOrdenadamenteVetoresOrdenadosNumVetorDestino(int[] vetorDestino, int tamanhoVetorDestino, 
-			int[] vetorEsquerda, int tamanhoVetorEsquerda, int[] vetorDireita, int tamanhoVetorDireita) {
+	// Já foram ordenados pedacinhos esquerdo e direito do vetor. Aqui vamos unir eles de maneira ordenada no mesmo vetor.
+	public static void ordenarPartesOrdenadasDumVetorNoMesmoVetor(int[] vetor, int indiceInicioMetadeEsquerdaOrdenada,
+			int indiceFimMetadeEsquerdaOrdenada, int indiceInicioMetadeDireitaOrdenada, int indiceFimMetadeDireitaOrdenada) {
+
+		int tamanhoParteEsquerda = indiceFimMetadeEsquerdaOrdenada - indiceInicioMetadeEsquerdaOrdenada + 1;
+		int tamanhoParteDireita = indiceFimMetadeDireitaOrdenada - indiceInicioMetadeDireitaOrdenada + 1;
+		int tamanhoVetorDestinoQueSeraOrdenado = tamanhoParteEsquerda + tamanhoParteDireita;
 		
-		for (int i = 0, e = 0, d = 0; i < tamanhoVetorDestino; i++) {
-			boolean isVetorEsquerdaEsgotado = (e > (tamanhoVetorEsquerda - 1));
-			boolean isVetorDireitaEsgotado =  (d > (tamanhoVetorDireita - 1));
+		// Este 'vetorAuxOrdenado' existe porque:
+		// Se 'vetor' = ... 4, 5, 6, 1, 2, 3, ...
+		// Sendo a parte esquerda 4, 5, 6 e a parte direita 1, 2, 3, então neste exemplo na ordenação
+		// a parte direita seria salva por cima da parte esquerda, perdendo os dados da parte esquerda. Por isso preciso do
+		// 'vetorAuxOrdenado' pra guardar o resultado ordenado para no final eu copiar os dados dele no 'vetor'.
+		int[] vetorAuxOrdenado = new int[tamanhoVetorDestinoQueSeraOrdenado];
+		
+		for (int i = 0, e = indiceInicioMetadeEsquerdaOrdenada, 
+				d = indiceInicioMetadeDireitaOrdenada; i < tamanhoVetorDestinoQueSeraOrdenado; i++) {
 			
-			if (isVetorEsquerdaEsgotado) {
-				vetorDestino[i] = vetorDireita[d];
+			boolean isParteEsquerdaEsgotada = (e > indiceFimMetadeEsquerdaOrdenada);
+			boolean isParteDireitaEsgotada =  (d > indiceFimMetadeDireitaOrdenada);
+			
+			if (isParteEsquerdaEsgotada) {
+				vetorAuxOrdenado[i] = vetor[d];
 				d++;
 				continue;
 			}
-			if (isVetorDireitaEsgotado) {
-				vetorDestino[i] = vetorEsquerda[e];
+			if (isParteDireitaEsgotada) {
+				vetorAuxOrdenado[i] = vetor[e];
 				e++;
 				continue;
 			}
 			
-//			vetorUniao[i] = (vetorEsquerda[e] < vetorDireita[d]) ? vetorEsquerda[e++] : vetorDireita[d++];
-			
-			if (vetorEsquerda[e] < vetorDireita[d]) {
-				vetorDestino[i] = vetorEsquerda[e];
+			if (vetor[e] < vetor[d]) {
+				vetorAuxOrdenado[i] = vetor[e];
 				e++;
 			} else {
-				vetorDestino[i] = vetorDireita[d];
+				vetorAuxOrdenado[i] = vetor[d];
 				d++;
 			}
 		}
 		
+		copiarTodosDadosVetorOrigemNumTrechoVetorDestino(vetorAuxOrdenado, vetor, 
+				indiceInicioMetadeEsquerdaOrdenada, indiceFimMetadeDireitaOrdenada);
+		
 	}
 	
-	public static void copiarDadosVetor(int[] vetorClone, int[] vetorACopiar, int indiceInicioDadosVetorACopiar, int indiceFimDadosVetorACopiar) {
-		for(int i = 0, j = indiceInicioDadosVetorACopiar; j <= indiceFimDadosVetorACopiar; i++, j++) {
-			vetorClone[i] = vetorACopiar[j];
+	public static void copiarTodosDadosVetorOrigemNumTrechoVetorDestino(int[] vetorOrigem, int[] vetorDestino, 
+			int indiceInicioTrechoVetorDestino, int indiceFimTrechoVetorDestino) {
+		for(int id = indiceInicioTrechoVetorDestino, io = 0; id <= indiceFimTrechoVetorDestino; id++, io++) {
+			vetorDestino[id] = vetorOrigem[io];
 		}
 	}
 	
