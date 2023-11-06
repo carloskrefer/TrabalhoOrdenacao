@@ -3,9 +3,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		System.out.println("oi");
-		int[] x = {7, 2, 9};
+		int[] x = {99, 1, 50, 4, 55, 99, 0, 55, 5};
 		
-		ordenarMergeSort(x, 3);
+		ordenarMergeSort(x, 9);
 		
 		imprimirVetor(x);
 		
@@ -26,13 +26,15 @@ public class Main {
 			int tamanhoVetorMetadeDireita = (isTamanhoVetorImpar) ? (tamanhoVetor / 2) + 1 : tamanhoVetor / 2;
 			int[] vetorMetadeDireita = new int[tamanhoVetorMetadeDireita];
 			
-			copiarDadosVetor(vetorMetadeEsquerda, 	vetor, 		0, 								tamanhoVetorMetadeEsquerda - 1);
-			copiarDadosVetor(vetorMetadeDireita,  	vetor, 		tamanhoVetorMetadeEsquerda, 		tamanhoVetor - 1);
+			copiarDadosVetor(vetorMetadeEsquerda,   vetor,   0, 						   tamanhoVetorMetadeEsquerda - 1);
+			copiarDadosVetor(vetorMetadeDireita,  	vetor,   tamanhoVetorMetadeEsquerda,   tamanhoVetor - 1);
 			
 			ordenarMergeSort(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda);
 			ordenarMergeSort(vetorMetadeDireita,  tamanhoVetorMetadeDireita);
 			
-			vetor = unirOrdenadamenteVetoresOrdenados(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);
+			unirOrdenadamenteVetoresOrdenadosNumVetorDestino(vetor, tamanhoVetor, vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);
+			
+			
 			
 		}  else if (tamanhoVetor == 2) {
 			if (vetor[0] > vetor[1]) {
@@ -43,21 +45,20 @@ public class Main {
 		}
 	}
 	
-	public static int[] unirOrdenadamenteVetoresOrdenados(int[] vetorEsquerda, int tamanhoVetorEsquerda, int[] vetorDireita, int tamanhoVetorDireita) {
-		int tamanhoVetorUniao = tamanhoVetorEsquerda + tamanhoVetorDireita;
-		int[] vetorUniao = new int[tamanhoVetorUniao];
+	public static void unirOrdenadamenteVetoresOrdenadosNumVetorDestino(int[] vetorDestino, int tamanhoVetorDestino, 
+			int[] vetorEsquerda, int tamanhoVetorEsquerda, int[] vetorDireita, int tamanhoVetorDireita) {
 		
-		for (int i = 0, e = 0, d = 0; i < tamanhoVetorUniao; i++) {
+		for (int i = 0, e = 0, d = 0; i < tamanhoVetorDestino; i++) {
 			boolean isVetorEsquerdaEsgotado = (e > (tamanhoVetorEsquerda - 1));
 			boolean isVetorDireitaEsgotado =  (d > (tamanhoVetorDireita - 1));
 			
 			if (isVetorEsquerdaEsgotado) {
-				vetorUniao[i] = vetorDireita[d];
+				vetorDestino[i] = vetorDireita[d];
 				d++;
 				continue;
 			}
 			if (isVetorDireitaEsgotado) {
-				vetorUniao[i] = vetorEsquerda[e];
+				vetorDestino[i] = vetorEsquerda[e];
 				e++;
 				continue;
 			}
@@ -65,14 +66,14 @@ public class Main {
 //			vetorUniao[i] = (vetorEsquerda[e] < vetorDireita[d]) ? vetorEsquerda[e++] : vetorDireita[d++];
 			
 			if (vetorEsquerda[e] < vetorDireita[d]) {
-				vetorUniao[i] = vetorEsquerda[e];
+				vetorDestino[i] = vetorEsquerda[e];
 				e++;
 			} else {
-				vetorUniao[i] = vetorDireita[d];
+				vetorDestino[i] = vetorDireita[d];
 				d++;
 			}
 		}
-		return vetorUniao;
+		
 	}
 	
 	public static void copiarDadosVetor(int[] vetorClone, int[] vetorACopiar, int indiceInicioDadosVetorACopiar, int indiceFimDadosVetorACopiar) {
