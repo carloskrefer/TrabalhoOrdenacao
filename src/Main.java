@@ -32,10 +32,7 @@ public class Main {
 			ordenarMergeSort(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda);
 			ordenarMergeSort(vetorMetadeDireita,  tamanhoVetorMetadeDireita);
 			
-			unirOrdenadamenteVetoresOrdenadosNumVetorDestino(vetor, tamanhoVetor, vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);
-			
-			
-			
+			unirOrdenadamenteVetoresOrdenadosNumVetorDestino(vetor, tamanhoVetor, vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);	
 		}  else if (tamanhoVetor == 2) {
 			if (vetor[0] > vetor[1]) {
 				int temp = vetor[0];
