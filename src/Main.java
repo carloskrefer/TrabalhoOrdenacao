@@ -3,11 +3,13 @@ public class Main {
 	
 	public static void main(String[] args) {
 		System.out.println("oi");
-		int[] x = {5, 4, 3, 2, 1, 0};
+		int[] x = {7, 2, 9};
 		
-		ordenarBubbleSort(x, 6);
+		ordenarMergeSort(x, 3);
 		
 		imprimirVetor(x);
+		
+		
 		
 	}
 	
@@ -25,22 +27,52 @@ public class Main {
 			int[] vetorMetadeDireita = new int[tamanhoVetorMetadeDireita];
 			
 			copiarDadosVetor(vetorMetadeEsquerda, 	vetor, 		0, 								tamanhoVetorMetadeEsquerda - 1);
-			copiarDadosVetor(vetorMetadeDireita,  	vetor, 		tamanhoVetorMetadeDireita, 		tamanhoVetor - 1);
+			copiarDadosVetor(vetorMetadeDireita,  	vetor, 		tamanhoVetorMetadeEsquerda, 		tamanhoVetor - 1);
 			
 			ordenarMergeSort(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda);
 			ordenarMergeSort(vetorMetadeDireita,  tamanhoVetorMetadeDireita);
 			
+			vetor = unirOrdenadamenteVetoresOrdenados(vetorMetadeEsquerda, tamanhoVetorMetadeEsquerda, vetorMetadeDireita, tamanhoVetorMetadeDireita);
 			
-			
-		}  else if (vetor[0] > vetor[1]) {
-			int temp = vetor[0];
-			vetor[0] = vetor[1];
-			vetor[1] = temp;
+		}  else if (tamanhoVetor == 2) {
+			if (vetor[0] > vetor[1]) {
+				int temp = vetor[0];
+				vetor[0] = vetor[1];
+				vetor[1] = temp;
+			}
 		}
+	}
+	
+	public static int[] unirOrdenadamenteVetoresOrdenados(int[] vetorEsquerda, int tamanhoVetorEsquerda, int[] vetorDireita, int tamanhoVetorDireita) {
+		int tamanhoVetorUniao = tamanhoVetorEsquerda + tamanhoVetorDireita;
+		int[] vetorUniao = new int[tamanhoVetorUniao];
 		
-		
-		
-		
+		for (int i = 0, e = 0, d = 0; i < tamanhoVetorUniao; i++) {
+			boolean isVetorEsquerdaEsgotado = (e > (tamanhoVetorEsquerda - 1));
+			boolean isVetorDireitaEsgotado =  (d > (tamanhoVetorDireita - 1));
+			
+			if (isVetorEsquerdaEsgotado) {
+				vetorUniao[i] = vetorDireita[d];
+				d++;
+				continue;
+			}
+			if (isVetorDireitaEsgotado) {
+				vetorUniao[i] = vetorEsquerda[e];
+				e++;
+				continue;
+			}
+			
+//			vetorUniao[i] = (vetorEsquerda[e] < vetorDireita[d]) ? vetorEsquerda[e++] : vetorDireita[d++];
+			
+			if (vetorEsquerda[e] < vetorDireita[d]) {
+				vetorUniao[i] = vetorEsquerda[e];
+				e++;
+			} else {
+				vetorUniao[i] = vetorDireita[d];
+				d++;
+			}
+		}
+		return vetorUniao;
 	}
 	
 	public static void copiarDadosVetor(int[] vetorClone, int[] vetorACopiar, int indiceInicioDadosVetorACopiar, int indiceFimDadosVetorACopiar) {
