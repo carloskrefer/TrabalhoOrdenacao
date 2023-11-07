@@ -4,7 +4,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		
-		ordenarQuickSort(new int[] {6, 0, 4, 9, 4, 1}, 0, 1, 5, 0, 5);
+		ordenarQuickSort(new int[] {9, 6, 0, 4, 9, 4, 1}, 0, 1, 6, 0, 6);
 		
 		
 		
@@ -15,7 +15,8 @@ public class Main {
 	public static void ordenarQuickSort(int[] vetor, int iPivo, int iEsq, int iDir, 
 			int iLimInfVetor, int iLimSupVetor) {
 		
-		// Significa que é um vetor com 1 elemento. Não há nada pra ordenar.
+		// Significa que é um vetor com 1 elemento. Ou, que foram informados
+		// limites sem sentido.
 		if ((iLimInfVetor == iLimSupVetor) || (iLimInfVetor > iLimSupVetor)) {
 			return;
 		}
@@ -31,15 +32,11 @@ public class Main {
 				iDir--;
 			}
 			
-			System.out.println(iEsq);
-			System.out.println(iDir);
-			
 			boolean isIndicesEsqDirMesmaPosicaoOuCruzados = iEsq >= iDir;
 			
-			// Se o direita cruzou
 			if (isIndicesEsqDirMesmaPosicaoOuCruzados) {
 				// 	2	1
-				//	p	ed		Troca pivo com direita! O pivô foi movido pra sua posição certa.
+				//	p	ed		Troca pivo com direita. O pivô foi movido pra sua posição certa.
 				//	
 				//	5 	7	->	5	7
 				//	p	ed		pd	e		Se p == d, não troca. Já está no lugar certo o pivô.
@@ -50,17 +47,11 @@ public class Main {
 					iPivo = iDir; // Necessário na recursão abaixo. O pivo mudou de posição.
 				}
 				
-				// o pivo está ordenado. agora, ordenar tudo à esquerda dele.
-				
-				//vetor	iPivo	iEsq	iDir	iLimInfVetor	iLimSupVetor
-				// TÁ DANDO EXCEPTION. CHECAR SE EU NÃO TENHO Q FAZER UM IF ANTES, TALVEZ ESTOU
-				// INSERINDO ARGUMENTOS QUE NÃO SÃO CAPTURADOS PELO (iLimInfVetor == iLimSupVetor) LÁ
-				// NO INÍCIO DESTE MÉTODO. NO CASO SE FOR ARRAY TAMANHO 1 NÃO TEM O QUE ORDENAR.
-				ordenarQuickSort(vetor, iLimInfVetor, iLimInfVetor + 1, iPivo - 1, iLimInfVetor, iPivo - 1);
-				ordenarQuickSort(vetor, iPivo + 1, iPivo + 2, iLimSupVetor, iPivo + 1, iLimSupVetor);
-				
-				
-				break; // finaliza o loop externo (ele só serve pra mover o iEsq e iDir enquanto não estão cruzados
+				// Argumentos:   vetor	iPivo	      iEsq	            iDir	      iLimInfVetor	iLimSupVetor
+				ordenarQuickSort(vetor, iLimInfVetor, iLimInfVetor + 1, iPivo - 1,    iLimInfVetor, iPivo - 1);
+				ordenarQuickSort(vetor, iPivo + 1,    iPivo + 2,        iLimSupVetor, iPivo + 1,    iLimSupVetor);
+					
+				break; // Finaliza o loop externo (ele só serve pra mover o iEsq e iDir enquanto não estão cruzados).
 			}
 			
 			if (!isIndicesEsqDirMesmaPosicaoOuCruzados) {
@@ -70,8 +61,6 @@ public class Main {
 			} 
 			
 		}
-		
-		imprimirVetor(vetor);
 	}
 	
 	
@@ -138,6 +127,7 @@ public class Main {
 				vetorAuxOrdenado[i] = vetor[d];
 				d++;
 			}
+			
 		}
 		
 		copiarTodosDadosVetorOrigemNumTrechoVetorDestino(vetorAuxOrdenado, vetor, 
@@ -152,8 +142,7 @@ public class Main {
 		}
 	}
 	
-	public static void ordenarBubbleSort(int[] vetor, int tamanhoVetor) {
-		
+	public static void ordenarBubbleSort(int[] vetor, int tamanhoVetor) {	
 		// -1 no loop externo serve porque foi percebido 
 		// que tudo já fica ordenado em uma iteração a menos.
 		//
