@@ -6,7 +6,8 @@ public class Main {
 	
 	public static double somaTempoSegundos = 0;
 	
-	public static final int[] VETOR_QTDS_DADOS_TESTES = {50, 500, 1000, 5000, 10000};
+//	public static final int[] VETOR_QTDS_DADOS_TESTES = {50, 500, 1000, 5000, 10000};
+	public static final int[] VETOR_QTDS_DADOS_TESTES = {50};
 	
 	public static void main(String[] args) {
 		long inicioCronometro;
@@ -65,16 +66,36 @@ public class Main {
 //			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
 //			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
 //			zerarVariaveisTeste();
-		}
+//		}
 			
 		// ----------------------------------------------------------------------------------------------
 		
-		
-
-		
-
+		System.out.println("QuickSort");
+		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
+			System.out.println("\tTamanho: " + 
+					VETOR_QTDS_DADOS_TESTES[i]);
+							
+			for (int j = 0; j < 5; j++) {
+				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
+				
+				inicioCronometro = System.nanoTime();
+				ordenarQuickSort(vetorGeradoAleatoriamente, 0, 1, VETOR_QTDS_DADOS_TESTES[i] - 1, 0, VETOR_QTDS_DADOS_TESTES[i] - 1);
+				fimCronometro    = System.nanoTime();
+				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
+				
+				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
+					throw new RuntimeException("Erro! Ordenação não ocorreu!");
+				}
+			}
 			
-		
+			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
+			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
+			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
+			zerarVariaveisTeste();
+		}
+
+		// ----------------------------------------------------------------------------------------------
+			
 	}
 	
 	private static void zerarVariaveisTeste() {
@@ -121,7 +142,7 @@ public class Main {
 		
 		// Significa que é um vetor com 1 elemento. Ou, que foram informados
 		// limites sem sentido.
-		if ((iLimInfVetor == iLimSupVetor) || (iLimInfVetor > iLimSupVetor)) {
+		if (iLimInfVetor >= iLimSupVetor) {
 			return;
 		}
 		
