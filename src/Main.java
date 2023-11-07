@@ -1,13 +1,117 @@
+import java.util.Random;
 
 public class Main {
+	public static int numeroTrocas = 0;
+	public static int numeroIteracoes = 0;
+	
+	public static double somaTempoSegundos = 0;
+	
+	public static final int[] VETOR_QTDS_DADOS_TESTES = {50, 500, 1000, 5000, 10000};
 	
 	public static void main(String[] args) {
+		long inicioCronometro;
+		long fimCronometro;
+		int[] vetorGeradoAleatoriamente;
+
+		System.out.println("Todos resultados foram obetidos pela média de 5 execuções.\n");
+		
+		// ----------------------------------------------------------------------------------------------
+		
+//		System.out.println("BubbleSort");
+//		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
+//			System.out.println("\tTamanho: " + 
+//					VETOR_QTDS_DADOS_TESTES[i]);
+//							
+//			for (int j = 0; j < 5; j++) {
+//				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
+//				
+//				inicioCronometro = System.nanoTime();
+//				ordenarBubbleSort(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i]);
+//				fimCronometro    = System.nanoTime();
+//				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
+//				
+//				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
+//					throw new RuntimeException("Erro! Ordenação não ocorreu!");
+//				}
+//			}
+//			
+//			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
+//			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
+//			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
+//			zerarVariaveisTeste();
+//		}
+		
+		// ----------------------------------------------------------------------------------------------
+		
+//		System.out.println("MergeSort");
+//		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
+//			System.out.println("\tTamanho: " + 
+//					VETOR_QTDS_DADOS_TESTES[i]);
+//							
+//			for (int j = 0; j < 5; j++) {
+//				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
+//				
+//				inicioCronometro = System.nanoTime();
+//				ordenarMergeSort(vetorGeradoAleatoriamente, 0, VETOR_QTDS_DADOS_TESTES[i] - 1);
+//				fimCronometro    = System.nanoTime();
+//				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
+//				
+//				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
+//					throw new RuntimeException("Erro! Ordenação não ocorreu!");
+//				}
+//			}
+//			
+//			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
+//			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
+//			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
+//			zerarVariaveisTeste();
+		}
+			
+		// ----------------------------------------------------------------------------------------------
 		
 		
-		ordenarQuickSort(new int[] {9, 6, 0, 4, 9, 4, 1}, 0, 1, 6, 0, 6);
+
 		
+
+			
 		
+	}
+	
+	private static void zerarVariaveisTeste() {
+		numeroTrocas = 0;
+		numeroIteracoes = 0;
+		somaTempoSegundos = 0;
+	}
+	
+	private static double obterDiferencaTempoSegundos(long inicioNanossegundos, long fimNanossegundos) {
+		return (fimNanossegundos - inicioNanossegundos) / 1_000_000_000.00d;
+	}
+	
+	public static int[] gerarVetorAleatorioMesmaSemente(int tamanho) {
+		long semente = 1L;
+		int valorMaximo = 1000;
+		Random random = new Random(semente);
+		int[] vetor = new int[tamanho];
 		
+		for (int i = 0; i < tamanho; i++) {
+			vetor[i] = random.nextInt(valorMaximo + 1);
+		}
+		
+		return vetor;
+	}
+	
+	// Apenas para conferir se a ordenação funcionou
+	public static boolean conferirSeEstaOrdenado(int[] vetor, int tamanho) {
+		int numAnterior = vetor[0];
+		boolean isOrdenado = true;
+		for (int i = 1; i < tamanho; i++) {
+			if (numAnterior > vetor[i]) {
+				isOrdenado = false;
+				break;
+			}
+			numAnterior = vetor[i];
+		}
+		return isOrdenado;
 	}
 	
 	// iEsq começa na esquerda, buscando valores menores que o pivo
@@ -67,6 +171,8 @@ public class Main {
 	public static void ordenarMergeSort(int[] vetor, int indiceInicio, int indiceFim) {	
 		int tamanhoVetor = indiceFim - indiceInicio + 1;
 		
+		numeroIteracoes++;
+		
 		if (tamanhoVetor > 2) {		
 			int tamanhoVetorMetadeEsquerda = tamanhoVetor / 2;
 			int indiceInicioMetadeEsquerda = indiceInicio;
@@ -86,6 +192,7 @@ public class Main {
 				int temp 			= vetor[indiceInicio];
 				vetor[indiceInicio] = vetor[indiceFim];
 				vetor[indiceFim] 	= temp;
+				numeroTrocas++;
 			}
 		}
 	}
@@ -106,25 +213,31 @@ public class Main {
 		for (int i = 0, e = indiceInicioMetadeEsquerdaOrdenada, 
 				d = indiceInicioMetadeDireitaOrdenada; i < tamanhoVetorDestinoQueSeraOrdenado; i++) {
 			
+			numeroIteracoes++;
+			
 			boolean isParteEsquerdaEsgotada = (e > indiceFimMetadeEsquerdaOrdenada);
 			boolean isParteDireitaEsgotada =  (d > indiceFimMetadeDireitaOrdenada);
 			
 			if (isParteEsquerdaEsgotada) {
 				vetorAuxOrdenado[i] = vetor[d];
 				d++;
+				numeroTrocas++;
 				continue;
 			}
 			if (isParteDireitaEsgotada) {
 				vetorAuxOrdenado[i] = vetor[e];
 				e++;
+				numeroTrocas++;
 				continue;
 			}
 			
 			if (vetor[e] < vetor[d]) {
 				vetorAuxOrdenado[i] = vetor[e];
+				numeroTrocas++;
 				e++;
 			} else {
 				vetorAuxOrdenado[i] = vetor[d];
+				numeroTrocas++;
 				d++;
 			}
 			
@@ -139,6 +252,8 @@ public class Main {
 			int indiceInicioTrechoVetorDestino, int indiceFimTrechoVetorDestino) {
 		for(int id = indiceInicioTrechoVetorDestino, io = 0; id <= indiceFimTrechoVetorDestino; id++, io++) {
 			vetorDestino[id] = vetorOrigem[io];
+			numeroIteracoes++;
+			numeroTrocas++;
 		}
 	}
 	
@@ -154,12 +269,14 @@ public class Main {
 		// "levados pela bolha" até o final na última iteração.
 		// Pois eles já chegaram na posição certa.	
 		for (int a = 0, c = 0; a < tamanhoVetor - 1; a++, c++) {
-			for (int b = 0; b < tamanhoVetor - 1 - c; b++) {
+			for (int b = 0; b < tamanhoVetor - 1 - c; b++) {			
 				if (vetor[b] > vetor[b+1]) {
 					int temp = vetor[b+1];
 					vetor[b+1] = vetor[b];
 					vetor[b] = temp;
+					numeroTrocas++;
 				}
+				numeroIteracoes++;
 			}
 		}
 	}
