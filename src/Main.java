@@ -2,17 +2,78 @@
 public class Main {
 	
 	public static void main(String[] args) {
-		System.out.println("oi");
-		int[] x = {5, 4, 6, 66, 0};
 		
-		// remover função LENGTH
-		ordenarMergeSort(x, 0, x.length - 1);
 		
-		imprimirVetor(x);
+		ordenarQuickSort(new int[] {6, 0, 4, 9, 4, 1}, 0, 1, 5, 0, 5);
 		
 		
 		
 	}
+	
+	// iEsq começa na esquerda, buscando valores menores que o pivo
+	// iDir começa na direita, buscando valores maiores que o pivo
+	public static void ordenarQuickSort(int[] vetor, int iPivo, int iEsq, int iDir, 
+			int iLimInfVetor, int iLimSupVetor) {
+		
+		// Significa que é um vetor com 1 elemento. Não há nada pra ordenar.
+		if ((iLimInfVetor == iLimSupVetor) || (iLimInfVetor > iLimSupVetor)) {
+			return;
+		}
+		
+		while (true) {
+			// Procura na esquerda um número maior que o pivô
+			while ((vetor[iEsq] < vetor[iPivo]) && (iEsq <= iLimSupVetor - 1)) {
+				iEsq++;
+			}
+			
+			// Procura na direita um número menor que o pivô
+			while (vetor[iDir] > vetor[iPivo] && (iDir >= iLimInfVetor + 1)) {
+				iDir--;
+			}
+			
+			System.out.println(iEsq);
+			System.out.println(iDir);
+			
+			boolean isIndicesEsqDirMesmaPosicaoOuCruzados = iEsq >= iDir;
+			
+			// Se o direita cruzou
+			if (isIndicesEsqDirMesmaPosicaoOuCruzados) {
+				// 	2	1
+				//	p	ed		Troca pivo com direita! O pivô foi movido pra sua posição certa.
+				//	
+				//	5 	7	->	5	7
+				//	p	ed		pd	e		Se p == d, não troca. Já está no lugar certo o pivô.
+				if (iPivo != iDir) {
+					int temp = vetor[iPivo];
+					vetor[iPivo] = vetor[iDir];
+					vetor[iDir] = temp;
+					iPivo = iDir; // Necessário na recursão abaixo. O pivo mudou de posição.
+				}
+				
+				// o pivo está ordenado. agora, ordenar tudo à esquerda dele.
+				
+				//vetor	iPivo	iEsq	iDir	iLimInfVetor	iLimSupVetor
+				// TÁ DANDO EXCEPTION. CHECAR SE EU NÃO TENHO Q FAZER UM IF ANTES, TALVEZ ESTOU
+				// INSERINDO ARGUMENTOS QUE NÃO SÃO CAPTURADOS PELO (iLimInfVetor == iLimSupVetor) LÁ
+				// NO INÍCIO DESTE MÉTODO. NO CASO SE FOR ARRAY TAMANHO 1 NÃO TEM O QUE ORDENAR.
+				ordenarQuickSort(vetor, iLimInfVetor, iLimInfVetor + 1, iPivo - 1, iLimInfVetor, iPivo - 1);
+				ordenarQuickSort(vetor, iPivo + 1, iPivo + 2, iLimSupVetor, iPivo + 1, iLimSupVetor);
+				
+				
+				break; // finaliza o loop externo (ele só serve pra mover o iEsq e iDir enquanto não estão cruzados
+			}
+			
+			if (!isIndicesEsqDirMesmaPosicaoOuCruzados) {
+				int temp = vetor[iEsq];
+				vetor[iEsq] = vetor[iDir];
+				vetor[iDir] = temp;
+			} 
+			
+		}
+		
+		imprimirVetor(vetor);
+	}
+	
 	
 	public static void ordenarMergeSort(int[] vetor, int indiceInicio, int indiceFim) {	
 		int tamanhoVetor = indiceFim - indiceInicio + 1;
