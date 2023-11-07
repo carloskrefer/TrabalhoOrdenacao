@@ -17,55 +17,55 @@ public class Main {
 		
 		// ----------------------------------------------------------------------------------------------
 		
-//		System.out.println("BubbleSort");
-//		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
-//			System.out.println("\tTamanho: " + 
-//					VETOR_QTDS_DADOS_TESTES[i]);
-//							
-//			for (int j = 0; j < 5; j++) {
-//				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
-//				
-//				inicioCronometro = System.nanoTime();
-//				ordenarBubbleSort(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i]);
-//				fimCronometro    = System.nanoTime();
-//				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
-//				
-//				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
-//					throw new RuntimeException("Erro! Ordenação não ocorreu!");
-//				}
-//			}
-//			
-//			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
-//			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
-//			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
-//			zerarVariaveisTeste();
-//		}
+		System.out.println("BubbleSort");
+		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
+			System.out.println("\tTamanho: " + 
+					VETOR_QTDS_DADOS_TESTES[i]);
+							
+			for (int j = 0; j < 5; j++) {
+				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
+				
+				inicioCronometro = System.nanoTime();
+				ordenarBubbleSort(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i]);
+				fimCronometro    = System.nanoTime();
+				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
+				
+				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
+					throw new RuntimeException("Erro! Ordenação não ocorreu!");
+				}
+			}
+			
+			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
+			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
+			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
+			zerarVariaveisTeste();
+		}
 		
 		// ----------------------------------------------------------------------------------------------
 		
-//		System.out.println("MergeSort");
-//		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
-//			System.out.println("\tTamanho: " + 
-//					VETOR_QTDS_DADOS_TESTES[i]);
-//							
-//			for (int j = 0; j < 5; j++) {
-//				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
-//				
-//				inicioCronometro = System.nanoTime();
-//				ordenarMergeSort(vetorGeradoAleatoriamente, 0, VETOR_QTDS_DADOS_TESTES[i] - 1);
-//				fimCronometro    = System.nanoTime();
-//				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
-//				
-//				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
-//					throw new RuntimeException("Erro! Ordenação não ocorreu!");
-//				}
-//			}
-//			
-//			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
-//			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
-//			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
-//			zerarVariaveisTeste();
-//		}
+		System.out.println("MergeSort");
+		for (int i = 0; i < obterTamanhoVetor(VETOR_QTDS_DADOS_TESTES); i++) {
+			System.out.println("\tTamanho: " + 
+					VETOR_QTDS_DADOS_TESTES[i]);
+							
+			for (int j = 0; j < 5; j++) {
+				vetorGeradoAleatoriamente = gerarVetorAleatorioMesmaSemente(VETOR_QTDS_DADOS_TESTES[i]);
+				
+				inicioCronometro = System.nanoTime();
+				ordenarMergeSort(vetorGeradoAleatoriamente, 0, VETOR_QTDS_DADOS_TESTES[i] - 1);
+				fimCronometro    = System.nanoTime();
+				somaTempoSegundos += obterDiferencaTempoSegundos(inicioCronometro, fimCronometro);
+				
+				if (!conferirSeEstaOrdenado(vetorGeradoAleatoriamente, VETOR_QTDS_DADOS_TESTES[i])) {
+					throw new RuntimeException("Erro! Ordenação não ocorreu!");
+				}
+			}
+			
+			System.out.printf("\t\tTempo execução: %.9f s\n", (somaTempoSegundos / 5.0));
+			System.out.println("\t\tNúmero de trocas: " + (numeroTrocas / 5));
+			System.out.println("\t\tNúmero de iterações: " + (numeroIteracoes / 5));	
+			zerarVariaveisTeste();
+		}
 			
 		// ----------------------------------------------------------------------------------------------
 		
@@ -139,6 +139,8 @@ public class Main {
 	public static void ordenarQuickSort(int[] vetor, int iPivo, int iEsq, int iDir, 
 			int iLimInfVetor, int iLimSupVetor) {
 		
+		numeroIteracoes++;
+		
 		// Significa que é um vetor com 1 elemento. Ou, que foram informados
 		// limites sem sentido.
 		if (iLimInfVetor >= iLimSupVetor) {
@@ -146,12 +148,13 @@ public class Main {
 		}
 		
 		while (true) {
-			// Procura na esquerda um número maior que o pivô
+			// Procura na esquerda um número maior que o pivô (ou seja, números iguais
+			// ao pivô ficam na esquerda)
 			while ((vetor[iEsq] <= vetor[iPivo]) && (iEsq <= iLimSupVetor - 1)) {
 				iEsq++;
 			}
 			
-			// Procura na direita um número menor que o pivô
+			// Procura na direita um número menor ou igual ao pivô
 			while (vetor[iDir] > vetor[iPivo] && (iDir >= iLimInfVetor + 1)) {
 				iDir--;
 			}
@@ -169,6 +172,7 @@ public class Main {
 					vetor[iPivo] = vetor[iDir];
 					vetor[iDir] = temp;
 					iPivo = iDir; // Necessário na recursão abaixo. O pivo mudou de posição.
+					numeroTrocas++;
 				}
 				
 				// Argumentos:   vetor	iPivo	      iEsq	            iDir	      iLimInfVetor	iLimSupVetor
@@ -182,8 +186,10 @@ public class Main {
 				int temp = vetor[iEsq];
 				vetor[iEsq] = vetor[iDir];
 				vetor[iDir] = temp;
+				numeroTrocas++;
 			} 
 			
+			numeroIteracoes++;
 		}
 	}
 	
@@ -241,23 +247,19 @@ public class Main {
 			if (isParteEsquerdaEsgotada) {
 				vetorAuxOrdenado[i] = vetor[d];
 				d++;
-				numeroTrocas++;
 				continue;
 			}
 			if (isParteDireitaEsgotada) {
 				vetorAuxOrdenado[i] = vetor[e];
 				e++;
-				numeroTrocas++;
 				continue;
 			}
 			
 			if (vetor[e] < vetor[d]) {
 				vetorAuxOrdenado[i] = vetor[e];
-				numeroTrocas++;
 				e++;
 			} else {
 				vetorAuxOrdenado[i] = vetor[d];
-				numeroTrocas++;
 				d++;
 			}
 			
