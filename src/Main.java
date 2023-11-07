@@ -6,8 +6,7 @@ public class Main {
 	
 	public static double somaTempoSegundos = 0;
 	
-//	public static final int[] VETOR_QTDS_DADOS_TESTES = {50, 500, 1000, 5000, 10000};
-	public static final int[] VETOR_QTDS_DADOS_TESTES = {50};
+	public static final int[] VETOR_QTDS_DADOS_TESTES = {50, 500, 1000, 5000, 10000};
 	
 	public static void main(String[] args) {
 		long inicioCronometro;
@@ -148,7 +147,7 @@ public class Main {
 		
 		while (true) {
 			// Procura na esquerda um número maior que o pivô
-			while ((vetor[iEsq] < vetor[iPivo]) && (iEsq <= iLimSupVetor - 1)) {
+			while ((vetor[iEsq] <= vetor[iPivo]) && (iEsq <= iLimSupVetor - 1)) {
 				iEsq++;
 			}
 			
