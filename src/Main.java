@@ -1,3 +1,9 @@
+/*
+ * Aluno: Carlos Eduardo Krefer
+ * TDE 03 RA 04 - Estrutura de Dados
+ * 07/11/2023
+ */
+
 import java.util.Random;
 
 public class Main {
